@@ -21,6 +21,8 @@ app.route('/')
   .post(function(req, res) {
     if(req.body.name.toLowerCase().indexOf('magic eight ball') < 0 && req.body.text.toLowerCase().indexOf('magic eight ball') > -1) {
       setTimeout(sayBot(res), 4000);
+    }else if(req.body.name.toLowerCase().indexOf('magic 8 ball') < 0 && req.body.text.toLowerCase().indexOf('magic 8 ball') > -1) {
+      setTimeout(sayBot(res), 4000);
     }else {
       res.send('Thanks');
     }
