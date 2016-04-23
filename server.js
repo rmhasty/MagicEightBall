@@ -5,6 +5,7 @@ var request = require('request');
 var app = express();
 
 var port = process.env.PORT || 3000;
+var triggers = ['magic eight ball', 'magic 8 ball'];
 
 var postOptions = {
   url: 'https://api.groupme.com/v3/bots/post',
@@ -19,7 +20,7 @@ app.route('/')
     //res.end('Thanks');
   })
   .post(function(req, res) {
-    if(req.body.name.toLowerCase().indexOf('magic eight ball') < 0 && req.body.text.toLowerCase().indexOf('magic eight ball') > -1) {
+    if(isTriggered(text)) {
       setTimeout(sayBot(res), 4000);
     }else {
       res.send('Thanks');
@@ -35,6 +36,16 @@ function sayBot(res) {
   request(postOptions, function(error, response, body) {
     res.end('Thanks');
   });
+}
+
+function isTriggered(text) {
+  var loweredText = text.toLowerCase();
+  for(var i = 0; i < triggers.length; i ++) {
+    if(loweredText.indexOf(triggers[i]) > -1 ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 app.listen(port, function(){
